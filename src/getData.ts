@@ -1,11 +1,11 @@
-import Playwright from "puppeteer";
+import Playwright from "playwright";
 import { join } from "path";
 import { URL } from "url";
 import { fileTypeFromBuffer } from "file-type";
 import { EXECUTABLE_PATH, PATH_IMAGES } from "./config";
 import { wait } from "./utils";
 
-const waitBrowser = Playwright.launch({
+const waitBrowser = Playwright.chromium.launch({
   headless: true,
   executablePath: EXECUTABLE_PATH,
   args: [
