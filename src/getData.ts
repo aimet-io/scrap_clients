@@ -12,8 +12,11 @@ export const getData = async (url: string, notSave?: boolean) => {
   const page = await waitPage;
   await page.goto(url);
   const title = await page.title();
-  const description =  await page.$eval('meta[name=description]', (element) => element.getAttribute('content'));
-
+  const description = await page
+    .$eval("meta[name=description]", (element) =>
+      element.getAttribute("content")
+    )
+    .catch(() => "");
   const hostname = new URL(url).hostname;
 
   const pathImage = join(PATH_IMAGES, hostname + ".jpeg");
@@ -26,14 +29,12 @@ export const getData = async (url: string, notSave?: boolean) => {
 
   if (!mimeType) return null;
 
-  const image = `data:${mimeType.mime};base64,${buffer.toString(
-    "base64"
-  )}`;
+  const image = `data:${mimeType.mime};base64,${buffer.toString("base64")}`;
 
   return {
     title,
     url,
     description,
     image,
-  }
+  };
 };

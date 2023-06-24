@@ -8,12 +8,14 @@ const main = async () => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
 
-  app.post("/", async (req, res) => {
+  app.get("*", async (req, res) => {
     try {
-      const { url } = req.body;
+      const url = req.path.slice(1);
       const data = await getData(url);
       res.json(data);
     } catch (error) {
+      console.log(error);
+
       res.json({ error });
     }
   });
