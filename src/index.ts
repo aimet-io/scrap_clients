@@ -12,7 +12,7 @@ const main = async () => {
     try {
       const { url } = req.body;
       const data = await getData(url);
-      res.json({ data });
+      res.json(data);
     } catch (error) {
       res.json({ error });
     }

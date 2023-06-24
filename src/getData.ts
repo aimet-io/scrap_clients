@@ -2,7 +2,7 @@ import Playwright from "puppeteer";
 import { join } from "path";
 import { URL } from "url";
 import { fileTypeFromBuffer } from "file-type";
-import { EXECUTABLE_PATH, PATH_IMAGES } from "./config";
+import { PATH_IMAGES } from "./config";
 
 const waitPage = Playwright.launch({
   headless: true,
@@ -11,6 +11,8 @@ const waitPage = Playwright.launch({
 export const getData = async (url: string, notSave?: boolean) => {
   const page = await waitPage;
   await page.goto(url);
+  const title = await page.title();
+  const description =  await page.$eval('meta[name=description]', (element) => element.getAttribute('content'));
 
   const hostname = new URL(url).hostname;
 
@@ -24,9 +26,14 @@ export const getData = async (url: string, notSave?: boolean) => {
 
   if (!mimeType) return null;
 
-  const base64String = `data:${mimeType.mime};base64,${buffer.toString(
+  const image = `data:${mimeType.mime};base64,${buffer.toString(
     "base64"
   )}`;
 
-  return base64String;
+  return {
+    title,
+    url,
+    description,
+    image,
+  }
 };
