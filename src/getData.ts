@@ -1,14 +1,12 @@
-import Playwright from "playwright";
+import Playwright from "puppeteer";
 import { join } from "path";
 import { URL } from "url";
-import fileType, { fileTypeFromBuffer } from "file-type";
+import { fileTypeFromBuffer } from "file-type";
 import { EXECUTABLE_PATH, PATH_IMAGES } from "./config";
 
-const waitPage = Playwright.chromium
-  .launch({
-    executablePath: EXECUTABLE_PATH,
-  })
-  .then((browser) => browser.newPage());
+const waitPage = Playwright.launch({
+  headless: true,
+}).then((browser) => browser.newPage());
 
 export const getData = async (url: string, notSave?: boolean) => {
   const page = await waitPage;

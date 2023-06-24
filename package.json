@@ -27,6 +27,7 @@
     "file-type": "^18.5.0",
     "pkg": "^5.8.1",
     "playwright": "^1.35.1",
+    "puppeteer": "^20.7.3",
     "typescript": "^5.1.3"
   }
 }
