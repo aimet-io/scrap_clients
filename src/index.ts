@@ -12,7 +12,13 @@ const main = async () => {
     try {
       const { url } = req.body;
       const data = await getData(url);
-      res.json({ data });
+      res.json({ 
+        "title": data.title,
+        "urlPage": data.urlPage,
+        "pageDescription": data.pageDescription,
+        "buffer": data.buffer
+      });
+      // res.json({ "data":"realizado" });
     } catch (error) {
       res.json({ error });
     }

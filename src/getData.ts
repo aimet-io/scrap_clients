@@ -12,12 +12,20 @@ const waitPage = Playwright.chromium
 export const getData = async (url: string) => {
   const page = await waitPage;
   await page.goto(url);
+  const title = await page.title();
+  const urlPage = page.url();
+  const pageDescription =  await page.$eval('meta[name=description]', (element) => element.getAttribute('content'));
 
   const hostname = new URL(url).hostname;
 
   const pathImage = join(PATH_IMAGES, hostname + ".jpeg");
 
-  const buffer = await page.screenshot({ path: pathImage });
+  const buffer = (await page.screenshot({ path: pathImage })).toString("base64");
 
-  return buffer.toString();
+  return {
+    title,
+    urlPage,
+    pageDescription,
+    buffer,
+  }
 };
