@@ -1,7 +1,7 @@
-// import { getData } from "./getData";
+import { getData } from "./getData";
 
 const url = process.argv[2];
 
-console.log(url);
+getData(url).then(console.log);
 
-// new Promise((res) => setTimeout(() => res(url), 5000));
+console.log(url);
