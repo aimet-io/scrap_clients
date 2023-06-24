@@ -20,12 +20,13 @@ const waitBrowser = Playwright.chromium.launch({
 
 export const getData = async (url: string, notSave?: boolean) => {
   const browser = await waitBrowser;
-  const page = await browser.newPage();
-  await page.setViewport({
-    width: 1366,
-    height: 768,
-    deviceScaleFactor: 1,
+  const context = await browser.newContext({
+    viewport: {
+      width: 1366,
+      height: 768,
+    },
   });
+  const page = await context.newPage();
   await page.goto(url);
   const title = await page.title();
   const description = await page
